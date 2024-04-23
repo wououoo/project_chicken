@@ -1,0 +1,155 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height : 100vh;
+    width: 100%;
+    background-color:black;
+    /*background-image: url("/resources/img/login/bg_ck.jpg");*/
+    background-size: cover;
+}
+
+
+
+.head {
+    position: relative;
+    top: -290px;
+    left: 120px;
+    color: white;
+    width: 30px;
+    height: 30px;
+}
+
+.container .input-box {
+    position:relative;
+    margin:10px 0;
+}
+
+.container .input-box input {
+    background:transparent;
+    border:none;
+    border-bottom: solid 1px white;
+    padding:20px 180px 5px 0px;
+    font-size:14pt;
+    width:100%;
+    color: white;
+}
+
+
+
+.container input::placeholder {
+    color:transparent;
+}
+
+.container input:placeholder-shown + label {
+    color:white;
+    font-size:14pt;
+    top:15px;
+}
+
+.container .input-box input:focus + label, label {
+    color:white;
+    font-size:10pt;
+    pointer-events: none;
+    position: absolute;
+    left:0px;
+    top:0px;
+    transition: all 0.2s ease ;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+}
+
+.container input:focus, input:not(:placeholder-shown) {
+    border-bottom: solid 1px #8aa1a1;
+    outline:none;
+}
+
+.container .btn-hover {
+    position: relative;
+    top: 35px;
+    width: 415px;
+    height: 50px;
+    border-radius: 5px;
+    border-style: none;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    background-size: 300% 100%;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.container .btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.container .btn-hover:focus {
+    outline: none;
+}
+
+.container .btn-hover.color-11 {
+    background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);  box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+}
+
+.container .btn-hover.color-9 {
+    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
+
+.container .signup_bt input {
+    position: relative;
+    top: 50px;
+    left: 0px;
+    width: 415px;
+    height: 50px;
+    border-radius: 5px;
+    border-style: none;
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.container .api_signup {
+    position: relative;
+    top: 70px;
+
+}
+
+.container .api_signup img {
+    position: relative;
+    left: 75px;
+    width: 260px;
+    height: 45px;
+
+}
+
+.container .custom-control {
+    position: relative;
+    top: 5px;
+    color: white;
+}
+
+.container .custom-control-la {
+    position: relative;
+    top: 5px;
+    color: white;
+}

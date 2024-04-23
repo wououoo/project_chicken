@@ -1,0 +1,113 @@
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	min-height : 100vh;
+    width: 100%;
+    background-image: url("/resources/img/login/signupbg.png");
+    background-size: cover;
+}
+
+ .container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: solid 1px gray;
+    border-radius: 10px;
+    padding: 130px 35px 130px 35px;
+}
+
+.container input {
+    padding: 13px;
+    width: 400px;
+    margin: 15px;
+    border-radius: 5px;
+    border: solid 1px gray;
+}
+
+ .container .header {
+    position: relative;
+    top: -30px;
+    left: 15px;
+ }
+
+ .container .Profile #email-domain {
+    padding: 5px;
+    border-radius: 5px;
+    border: solid 1px gray;
+ }
+
+ .container .Profile .authoritybox {
+    position: relative;
+    top: 10px;
+    left: 15px;
+ }
+
+ .container .Profile .authoritybox #authority-domain {
+    padding: 5px;
+    border-radius: 5px;
+    border: solid 1px gray;
+ }
+
+ .container .InputId button {
+    padding: 10px;
+    border-radius: 5px;
+    border-style: none;
+    color: white;
+    background-color: skyblue;
+    cursor: pointer;
+    font-weight: bold;
+ }
+
+ .container .signupbutton {
+    position: relative;
+    top: 30px;
+    text-align: center;
+    
+ }
+
+ .container .signupbutton #button1 {
+    padding: 10px;
+    width: 170px;
+    border-radius: 5px;
+    border-style: none;
+    color: white;
+    background-color: skyblue;
+    cursor: pointer;
+    font-weight: bold;
+ }
+
+ .container .signupbutton #button2 {
+    padding: 10px;
+    width: 170px;
+    border-radius: 5px;
+    border-style: none;
+    color: white;
+    background-color: red;
+    cursor: pointer;
+    font-weight: bold;
+ }
+
+ /* 중복체크 */
+#olmessage {
+    position: relative;
+    top: -2px;
+    left: 25px;
+    font-size: 13px; /* 원하는 사이즈로 설정합니다. */
+}
+
+.olmessagef {
+    color: red; /* 중복된 ID일 때의 메시지 색상을 설정합니다. */
+}
+
+.olmessaget {
+    color: blue; /* 중복되지 않은 ID일 때의 메시지 색상을 설정합니다. */
+}
+

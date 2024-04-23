@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.kammi.mapper.finishedgoods.StorageMapper">
+    <insert id="storageInsert">
+        INSERT INTO FINISHEDGOODSSTORAGE
+        VALUES(FINISHEDGOODSSTORAGE_SEQ.NEXTVAL,
+        #{storage_address},
+        #{storage_name},
+        0,
+        #{storage_total_amount})
+    </insert>
+
+    <select id="storageSelect" resultType="com.project.kammi.domain.finishedgoods.StorageVO">
+        SELECT *
+        FROM FINISHEDGOODSSTORAGE
+        WHERE STORAGE_NAME LIKE '%'||#{storage.storage_name}||'%'
+        <if test="storage.storage_current_amount == 0">
+            <![CDATA[
+                AND STORAGE_CURRENT_AMOUNT<STORAGE_TOTAL_AMOUNT
+            ]]>
+        </if>
+        <if test="storage.storage_current_amount == 1">
+            <![CDATA[
+                AND STORAGE_CURRENT_AMOUNT>=STORAGE_TOTAL_AMOUNT
+            ]]>
+        </if>
+        ORDER BY STORAGE_ID OFFSET (#{paging.pageNum}-1)*#{paging.pageSize} ROWS FETCH NEXT #{paging.pageSize} ROW ONLY
+    </select>
+
+    <select id="storageMaxCount" resultType="Integer">
+        SELECT COUNT(*)
+        FROM FINISHEDGOODSSTORAGE
+        WHERE STORAGE_NAME LIKE '%'||#{storage.storage_name}||'%'
+        <if test="storage.storage_current_amount == 0">
+            <![CDATA[
+                AND STORAGE_CURRENT_AMOUNT<STORAGE_TOTAL_AMOUNT
+            ]]>
+        </if>
+        <if test="storage.storage_current_amount == 1">
+            <![CDATA[
+                AND STORAGE_CURRENT_AMOUNT>=STORAGE_TOTAL_AMOUNT
+            ]]>
+        </if>
+    </select>
+
+    <delete id="storageDelete">
+        DELETE FROM FINISHEDGOODSSTORAGE WHERE STORAGE_ID = #{storage_id}
+    </delete>
+
+    <update id="storageUpdate">
+        UPDATE FINISHEDGOODSSTORAGE
+        SET STORAGE_ADDRESS = #{storage_address} , STORAGE_TOTAL_AMOUNT = #{storage_total_amount}
+        WHERE STORAGE_ID = #{storage_id}
+    </update>
+
+    <select id="storageIdSelect" resultType="com.project.kammi.domain.finishedgoods.StorageVO">
+        SELECT FINISHEDGOODSINVENTORY_STORAGE
+        FROM FINISHEDGOODSINVENTORY
+        GROUP BY FINISHEDGOODSINVENTORY_STORAGE
+    </select>
+
+    <update id="storageAmountUpdate">
+        UPDATE FINISHEDGOODSSTORAGE s
+        SET STORAGE_CURRENT_AMOUNT = (SELECT SUM(FINISHEDGOODSINVENTORY_QUANTITY)-NVL((SELECT SUM(FINISHEDGOODSINVENTORY_QUANTITY) AS min
+        FROM FINISHEDGOODSINVENTORY m
+        WHERE m.FINISHEDGOODSINVENTORY_DIVISION = '출고'
+        AND m.FINISHEDGOODSINVENTORY_STORAGE = p.FINISHEDGOODSINVENTORY_STORAGE
+        GROUP BY FINISHEDGOODSINVENTORY_GOODS_ID, FINISHEDGOODSINVENTORY_GOODS_NAME
+        ),0) AS FINISHEDGOODSINVENTORY_QUANTITY
+        FROM FINISHEDGOODSINVENTORY p
+        WHERE p.FINISHEDGOODSINVENTORY_DIVISION = '입고'
+        AND p.FINISHEDGOODSINVENTORY_STORAGE = s.STORAGE_ID
+        GROUP BY FINISHEDGOODSINVENTORY_STORAGE)
+        WHERE s.STORAGE_ID = #{storage_id}
+    </update>
+</mapper>

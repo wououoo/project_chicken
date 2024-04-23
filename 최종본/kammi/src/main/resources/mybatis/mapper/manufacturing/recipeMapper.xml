@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.kammi.mapper.manufacturing.recipeMapper">
+    <select id="recipeList" resultType="com.project.kammi.domain.manufacturing.recipeVO">
+        select a.recipe_name, b.filename, a.recipe_id
+        from recipe a, filerepository b
+        where a.recipe_id = b.recipe_id
+        order by a.recipe_id
+    </select>
+
+    <insert id = "insertRecipe">
+        INSERT INTO recipe(recipe_id, recipe_name, REGISTRATION_DATE)
+        SELECT recipe_seq.nextval, #{recipe_Name}, sysdate
+        FROM dual
+        WHERE NOT EXISTS (SELECT 1 FROM recipe WHERE recipe_name = #{recipe_Name})
+    </insert>
+
+    <insert id = "insertFile">
+        insert into insertFile
+        values(fileRepository_seq.nextval, #{recipe_id}, #{fileName}, #{filePath})
+    </insert>
+
+    <select id="selectAllRecipeInfoForUpdate" resultType="com.project.kammi.domain.manufacturing.recipeVO">
+        select
+           a.recipe_id, a.recipe_name, b.filename, a.registration_date, a.modify_date
+        from
+           recipe a, filerepository b
+        where
+           a.recipe_id = #{recipe_Id} and
+           b.recipe_id = #{recipe_Id}
+    </select>
+
+    <update id = "updateRecipe">
+        UPDATE RECIPE
+        SET
+            RECIPE_NAME = #{recipe_Name},
+            MODIFY_DATE = SYSDATE
+        WHERE
+            RECIPE_ID = #{recipe_Id}
+    </update>
+
+    <delete id = "deleteRecipe">
+        delete from
+            recipe
+        where
+            recipe_Id = #{recipe_Id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.kammi.mapper.manufacturing.perform.performMapper">
+    <select id="selectAllPerform" resultType="com.project.kammi.domain.manufacturing.manufacturingPerformVO">
+        SELECT *
+        FROM (
+        SELECT
+        ROW_NUMBER() OVER (ORDER BY perform_Id) AS rn,
+        perform_Id,
+        instruction_id,
+        manufacturing_Line,
+        recipe_name,
+        output,
+        perform_employee,
+        saline,
+        salineDI,
+        seasoning,
+        seasoningDI,
+        cooking,
+        cookingDI,
+        packaging,
+        packagingDI,
+        start_date,
+        end_date
+        FROM manufacturingPerform
+        WHERE recipe_name LIKE '%'||#{manufacturingPerformVO.recipe_Name}||'%'
+        <if test="manufacturingPerformVO.manufacturing_Line == 1">
+            AND manufacturing_Line=1
+        </if>
+        <if test="manufacturingPerformVO.manufacturing_Line == 2">
+            AND manufacturing_Line=2
+        </if>
+        <if test="manufacturingPerformVO.manufacturing_Line == 3">
+            AND manufacturing_Line=3
+        </if>
+        )
+        <![CDATA[
+        WHERE rn <= #{paging.pageNum} * #{paging.pageSize} AND rn > (#{paging.pageNum} - 1) * #{paging.pageSize}
+        ]]>
+        ORDER BY PERFORM_ID DESC
+    </select>
+
+    <select id="maxpagePerformCount" resultType="integer">
+        SELECT count(*)
+        FROM manufacturingPerform
+        WHERE recipe_name LIKE '%'||#{manufacturingPerformVO.recipe_Name}||'%'
+        <if test="manufacturingPerformVO.manufacturing_Line == '1'">
+            AND manufacturing_Line='1'
+        </if>
+        <if test="manufacturingPerformVO.manufacturing_Line == '2'">
+            AND manufacturing_Line='2'
+        </if>
+        <if test="manufacturingPerformVO.manufacturing_Line == '3'">
+            AND manufacturing_Line='3'
+        </if>
+
+    </select>
+
+    <select id="selectRowClickPerform" resultType="com.project.kammi.domain.manufacturing.manufacturingPerformVO">
+        SELECT *
+        FROM manufacturingPerform
+        where
+        perform_Id = #{perform_Id}
+    </select>
+
+    <select id="selectLineAndEmployee" resultType="com.project.kammi.domain.manufacturing.manufacturingPerformVO">
+        SELECT manufacturing_Line, perform_Employee
+        FROM manufacturingPerform
+        WHERE end_Date IS NULL
+    </select>
+
+
+
+    <insert id = "insertPerform">
+        INSERT INTO manufacturingPerform
+        (perform_ID, INSTRUCTION_ID, MANUFACTURING_LINE, RECIPE_NAME, output, perform_Employee)
+        VALUES
+        (MANUFACTURINGPERFORM_SEQ.NEXTVAL,
+            #{instruction_Id},
+            #{manufacturing_Line},
+            (SELECT
+                RECIPE_NAME
+             FROM
+                MANUFACTURINGINSTRUCTION
+            WHERE instruction_Id = #{instruction_Id}),
+            #{output},
+            #{perform_Employee})
+    </insert>
+
+    <select id = "selectRecipeNameSelectMaterials" resultType="com.project.kammi.domain.manufacturing.manufacturingPerformVO">
+        SELECT R.material_name,
+        R.recipe_product_quantity,
+        M.allamount,
+        M.allamount - #{output} * R.recipe_product_quantity AS remainingAmount
+        FROM recipestandard R
+        JOIN materials M ON R.material_name = M.material_division
+        JOIN MANUFACTURINGINSTRUCTION MI ON R.recipe_name = MI.recipe_Name
+        WHERE MI.instruction_Id = #{instruction_Id}
+    </select>
+
+    <update id = "updatePerform">
+        UPDATE manufacturingPerform
+        SET manufacturing_Line = #{manufacturing_Line},
+            output = #{output},
+            perform_Employee = #{perform_Employee}
+        WHERE perform_Id = #{perform_Id} and
+            start_date is null
+    </update>
+
+    <select id ="selectStartDateForUpdate" resultType="com.project.kammi.domain.manufacturing.manufacturingPerformVO">
+        SELECT START_DATE,PERFORM_EMPLOYEE, MANUFACTURING_LINE
+        FROM manufacturingPerform
+        where Start_date is not null and end_date is null
+    </select>
+
+    <select id ="selectStartDate" resultType="com.project.kammi.domain.manufacturing.manufacturingPerformVO">
+        SELECT START_DATE
+        FROM manufacturingPerform
+        where perform_Id = #{perform_Id}
+    </select>
+
+    <delete id = "deletePerform">
+        delete from
+        manufacturingPerform
+        where
+        perform_Id = #{perform_Id}
+        and
+        start_date is null
+    </delete>
+
+    <update id = "updateMaterialAllAmount">
+        UPDATE MATERIALS M
+            SET M.ALLAMOUNT = M.ALLAMOUNT - (
+                                            SELECT RS.RECIPE_PRODUCT_QUANTITY * #{output}
+                                            FROM RECIPESTANDARD RS
+                                            WHERE RS.MATERIAL_NAME = M.MATERIAL_DIVISION
+                                            AND RS.RECIPE_NAME = #{recipe_Name}
+                                            )
+        WHERE M.MATERIAL_DIVISION IN (
+                                        SELECT RS.MATERIAL_NAME
+                                        FROM RECIPESTANDARD RS
+                                        WHERE RS.RECIPE_NAME = #{recipe_Name}
+                                        )
+    </update>
+
+    <select id ="selectRecipeName" resultType="com.project.kammi.domain.manufacturing.manufacturingPerformVO">
+        SELECT recipe_Name
+        FROM manufacturingInstruction
+        where instruction_Id = #{instruction_Id}
+    </select>
+
+    <select id ="selectPerformAllTime" resultType="com.project.kammi.domain.manufacturing.manufacturingPerformVO">
+        SELECT *
+        FROM manufacturingPerform
+        where perform_id = #{perform_Id}
+    </select>
+
+    <update id="updatePerformTimeStatus">
+        UPDATE manufacturingperform
+        SET
+        start_Date = sysdate
+        WHERE perform_id = #{perform_Id}
+    </update>
+
+    <update id="updatePerformTimeStatus2">
+        UPDATE manufacturingperform
+        SET
+        saline  = sysdate
+        WHERE perform_id = #{perform_Id}
+    </update>
+    <update id="updatePerformTimeStatus3">
+        UPDATE manufacturingperform
+        SET
+        cooking  = sysdate
+        WHERE perform_id = #{perform_Id}
+    </update>
+    <update id="updatePerformTimeStatus4">
+        UPDATE manufacturingperform
+        SET
+        seasoning  = sysdate
+        WHERE perform_id = #{perform_Id}
+    </update>
+    <update id="updatePerformTimeStatus5">
+        UPDATE manufacturingperform
+        SET
+        packaging  = sysdate
+        WHERE perform_id = #{perform_Id}
+    </update>
+    <update id="updatePerformTimeStatus6">
+        UPDATE manufacturingperform
+        SET
+        end_Date  = sysdate
+        WHERE perform_id = #{perform_Id}
+    </update>
+
+    <insert id="updateFinishedGoodsQuantity">
+        INSERT
+        INTO FINISHEDGOODSINVENTORY
+        VALUES (
+        GoodsInven_seq.nextval,
+        (SELECT FINISHEDGOODS_ID
+        FROM FINISHEDGOODS
+        WHERE RECIPE_ID = (select recipe_Id from recipe where recipe_name = #{recipe_Name})),
+        (SELECT FINISHEDGOODS_NAME
+        FROM FINISHEDGOODS
+        WHERE RECIPE_ID = (select recipe_Id from recipe where recipe_name = #{recipe_Name})),
+        #{output},
+        '입고',
+        sysdate,
+        (SELECT STORAGE_ID
+        FROM FINISHEDGOODSSTORAGE
+        <![CDATA[
+        WHERE STORAGE_CURRENT_AMOUNT<STORAGE_TOTAL_AMOUNT
+        ]]>
+            ORDER BY STORAGE_CURRENT_AMOUNT
+            FETCH NEXT 1 ROW ONLY)
+        )
+
+    </insert>
+
+</mapper>

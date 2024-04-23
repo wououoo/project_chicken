@@ -1,0 +1,161 @@
+.modal.show {
+  display: block;
+}
+
+.modal-body .row{
+  display: flex;
+
+}
+
+      .inputDivBox {
+          position: relative;
+          width: 300px;
+          margin-left: 50px;
+          margin-top: 100px;
+          display: flex;
+        }
+
+        .inputBox {
+          font-size: 15px;
+          color: #222222;
+          width: 300px;
+          border: none;
+          border-bottom: solid #aaaaaa 1px;
+          padding-bottom: 10px;
+          padding-left: 10px;
+          position: relative;
+          display: flex;
+          background: none;
+          z-index: 5;
+        }
+
+        .inputBox::placeholder { color: #aaaaaa; }
+        .inputBox:focus { outline: none; }
+
+        .inputSpanTag {
+          display: block;
+          position: absolute;
+          bottom: 0;
+          left: 0%;  /* right로만 바꿔주면 오 - 왼 */
+          background-color: #666;
+          width: 0;
+          height: 2px;
+          border-radius: 2px;
+          transition: 0.5s;
+        }
+
+        .inputLabelTag {
+          position: absolute;
+          color: #aaa;
+          left: 10px;
+          font-size: 20px;
+          bottom: 8px;
+          transition: all .2s;
+        }
+
+       .inputBox:focus ~ label, .inputBox:valid ~ label {
+          font-size: 16px;
+          bottom: 40px;
+          color: #666;
+          font-weight: bold;
+        }
+
+        .inputBox:focus ~ span, .inputBox:valid ~ span {
+          width: 100%;
+        }
+
+
+    /* THE END OF THE IMPORTANT STUFF */
+
+    /* Basic Styling */
+
+
+    .containerTable {
+      display: block;
+      text-align: center;
+    }
+
+    @-webkit-keyframes leftRight {
+      0%    { -webkit-transform: translateX(0)}
+      25%   { -webkit-transform: translateX(-10px)}
+      75%   { -webkit-transform: translateX(10px)}
+      100%  { -webkit-transform: translateX(0)}
+    }
+    @keyframes leftRight {
+      0%    { transform: translateX(0)}
+      25%   { transform: translateX(-10px)}
+      75%   { transform: translateX(10px)}
+      100%  { transform: translateX(0)}
+    }
+
+    input[type='file'] {
+      display: block;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+    .form__input--file_wrap {
+      margin-top: 20px;
+      margin-left: 50px;
+      display: flex;
+    }
+    .form__label--file {
+      width: 80px;
+      height: 30px;
+      line-height:30px;
+      background: #999;
+      border-radius: 3px;
+      color: #fff;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .form__span--file {
+      padding: 0 5px 0 10px;
+      margin-left: 5px;
+      display: block;
+      width: 315px;
+      min-height: 30px;
+      border: 1px solid #e7e7e7;
+      border-radius: 3px;
+      line-height: 30px;
+      color: #999;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+
+    .inputFullBox{
+
+        margin-left: 15px;
+        border: 1px solid black;
+        border-radius: 5%;
+        width: 45%;
+        height: 90%;
+        padding-bottom: 5%;
+        margin-left: 3%;
+    }
+
+    .inputFullBoxTitle{
+        width:400px;
+        margin-left: 10%;
+        display:flex;
+    }
+    .modalTitle{
+        text-align: center;
+        justify-content: center;
+        margin: 0px auto;
+        padding-top: 5%;
+        font-size: 25px;
+    }
+    .inputFullPhotoBox{
+        width: 45%;
+        height: 572px;
+        border: 1px solid black;
+        border-radius: 5%;
+        margin-left: 3%;
+
+    }

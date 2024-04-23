@@ -1,0 +1,38 @@
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+.container .form-group {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container .form-group label {
+    text-align: left;
+}
+
+.container .update_bt {
+    text-align: center;
+}
+
+.container .update_bt input {
+    width: 120px;
+    height: 35px;
+    border-style: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.container .update_bt .bt_1 {
+    background-color: red;
+}
+
+.container .update_bt .bt_2 {
+    background-color: blue;
+}

@@ -1,0 +1,47 @@
+@font-face {
+    font-family: 'PuradakGentleGothicR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.1/PuradakGentleGothicR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+#mainlogo{
+    margin-left:-10px;
+    width: 180px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.project-footer{
+    --bs-bg-opacity: 1;
+    background-color: #343a40 !important;
+}
+
+.company{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 0.875em;
+}
+.company-color{
+    color:#9a9da0;
+}
+
+.name-email{
+    display: flex;
+    justify-content: center;
+}
+
+.ul-email{
+    text-align: center;
+    list-style-type:none;
+}
+.li-email{
+    float:left;
+}

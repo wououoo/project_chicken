@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.kammi.mapper.manufacturing.recipeStandardMapper">
+    <insert id="insertRecipeStandardLis1t" parameterType="com.project.kammi.domain.manufacturing.recipeStandardVO">
+        INSERT INTO recipestandard(standard_id, recipe_id, material_id, recipe_product_quantity, quantity_units, usephase)
+        VALUES(recipestandard_seq.nextval, #{recipeStandardList.recipe_Id}, #{recipeStandardList.material_Id}, #{recipeStandardList.recipe_Product_Quantity}, #{recipeStandardList.quantity_Units}, #{recipeStandardList.usePhase})
+    </insert>
+
+
+    <insert id="insertRecipeStandardList" parameterType="java.util.List">
+        <selectKey keyProperty="SEQ" resultType="int" order="BEFORE">
+            SELECT (SELECT STANDARD_ID+1
+                    FROM RECIPESTANDARD
+                    ORDER BY STANDARD_ID desc FETCH FIRST ROWS ONLY)
+            FROM DUAL
+        </selectKey>
+
+        <foreach item="item" collection="list" index="index" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+            INTO recipestandard(standard_id, recipe_Name, material_Name, recipe_product_quantity, quantity_units, usephase)
+            VALUES
+            (#{SEQ}+ #{index}, #{item.recipe_Name}, #{item.material_Name}, #{item.recipe_Product_Quantity}, #{item.quantity_Units}, #{item.usePhase})
+        </foreach>
+    </insert>
+
+    <select id="selectRecipeStandardInfoForUpdate" resultType="com.project.kammi.domain.manufacturing.recipeStandardVO">
+        SELECT
+            a.standard_id,
+            a.recipe_name,
+            a.material_name,
+            a.recipe_product_quantity,
+            a.quantity_units,
+            a.usephase
+        FROM
+            recipeStandard a
+        WHERE
+            a.recipe_name = (
+                            SELECT
+                                recipe_name
+                                FROM
+                                recipe
+                            WHERE
+                            recipe_id = #{recipe_Id}
+                            )
+                            AND (
+                            SELECT
+                                COUNT(*)
+                            FROM
+                                recipeStandard b
+
+                            WHERE
+                                b.recipe_name = (
+                                                SELECT
+                                                    recipe_name
+                                                FROM
+                                                    recipe
+                                                WHERE
+                                                    recipe_id = #{recipe_Id}
+                                )
+                            <![CDATA[
+                            ) > (#{paging.pageNum}-1)*#{paging.pageSize}
+                            ]]>
+    </select>
+
+    <update id = "autoUpdateStandardRecipe">
+        UPDATE RECIPESTANDARD
+        SET
+        RECIPE_NAME = #{recipe_Name}
+        WHERE
+            recipe_name = (
+            SELECT recipe_name
+            FROM recipe
+            WHERE recipe_id = #{recipe_Id}
+        )
+    </update>
+
+    <update id = "updateAllStandardRecipe">
+        UPDATE
+            RECIPESTANDARD
+        SET
+            RECIPE_NAME = #{recipe_Name},
+            MATERIAL_NAME = #{material_Name},
+            RECIPE_PRODUCT_QUANTITY = #{recipe_Product_Quantity},
+            QUANTITY_UNITS = #{quantity_Units},
+            USEPHASE = #{usePhase}
+        WHERE
+            STANDARD_ID = #{standard_Id}
+    </update>
+
+    <delete id = "deleteAllStandardRecipe">
+        delete from
+            recipestandard
+        where
+            STANDARD_ID = #{standard_Id}
+    </delete>
+
+    <delete id = "deleteStandardRecipe">
+        delete from
+            recipestandard
+        where
+            recipe_name = (SELECT recipe_name
+                           FROM recipe
+                           WHERE recipe_id = #{recipe_Id})
+    </delete>
+
+
+
+</mapper>

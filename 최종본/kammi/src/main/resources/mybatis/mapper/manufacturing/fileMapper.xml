@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.kammi.mapper.manufacturing.fileMapper">
+
+    <insert id = "insertFile">
+        insert into filerepository
+        values(
+        fileRepository_seq.nextval,
+        (select last_number from user_sequences where sequence_name='RECIPE_SEQ')-1,
+        #{fileName},
+        #{filePath})
+    </insert>
+
+    <select id="selectChickenPhoto" resultType="com.project.kammi.domain.manufacturing.fileVO">
+        select fileName from filerepository where recipe_id = #{recipe_Id}
+    </select>
+
+    <update id = "updateFileRecipe">
+        UPDATE filerepository
+        SET
+            FILENAME = #{fileName}
+        WHERE
+            RECIPE_ID = #{recipe_Id}
+    </update>
+
+
+
+
+</mapper>

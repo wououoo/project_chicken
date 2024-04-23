@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.kammi.mapper.login.MemberMapper">
+    <insert id="insertMember">
+        insert into ck_member (mno, username, password, email, role, kor_name, phone)
+        values (member_seq.nextval, #{username}, #{password}, #{email}, #{role}, #{korName}, #{phone})
+    </insert>
+
+    <select id="checkDuplicateId" resultType="int" parameterType="string">
+        SELECT COUNT(*) FROM ck_member WHERE username = #{username}
+    </select>
+
+    <select id="selectByUserName" resultType="com.project.kammi.domain.login.MemberVO">
+        select
+            mno,
+            username,
+            password,
+            email,
+            phone,
+            role,
+            kor_name as korName,
+            createDate
+        from ck_member where username = #{username}
+    </select>
+
+    <update id="updateUser" parameterType="com.project.kammi.domain.login.MemberVO">
+        update
+            ck_member
+        set
+            kor_name = #{korName},
+            email = #{email},
+            phone = #{phone}
+        where
+            mno = #{mno}
+    </update>
+
+    <select id="getMemberById" resultType="com.project.kammi.domain.login.MemberVO">
+        select * from ck_member where mno = #{mno}
+    </select>
+</mapper>

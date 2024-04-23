@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.kammi.mapper.finishedgoods.FinishedGoodsMapper">
+    <select id="getGoodsList" resultType="com.project.kammi.domain.finishedgoods.FinishedGoodsVO">
+        SELECT
+        rn,
+        FINISHEDGOODS_ID,
+        FINISHEDGOODS_NAME,
+        FINISHEDGOODS_QUANTITY,
+        FINISHEDGOODS_PRICE,
+        QUANTITY_UNITS,
+        FINISHEDGOODS_STATUS
+        FROM
+        (SELECT /*+ INDEX_ASC(FINISHEDGOODS SYS_C0012608)*/ rownum rn,
+        FINISHEDGOODS_ID,
+        FINISHEDGOODS_NAME,
+        FINISHEDGOODS_QUANTITY,
+        FINISHEDGOODS_PRICE,
+        QUANTITY_UNITS,
+        FINISHEDGOODS_STATUS
+        FROM FINISHEDGOODS
+        WHERE FINISHEDGOODS_NAME LIKE '%'||#{goods.finishedgoods_name}||'%'
+        <if test="goods.finishedgoods_status == 0">
+            AND FINISHEDGOODS_STATUS=0
+        </if>
+        <if test="goods.finishedgoods_status == 1">
+            AND FINISHEDGOODS_STATUS=1
+        </if>
+        <if test="goods.finishedgoods_status == 2">
+            AND FINISHEDGOODS_STATUS=2
+        </if>
+        <![CDATA[
+            AND rownum <= #{paging.pageNum}*#{paging.pageSize})
+            WHERE rn > (#{paging.pageNum}-1)*#{paging.pageSize}
+        ]]>
+    </select>
+
+    <select id="maxpageCount" resultType="integer">
+        SELECT count(*)
+        FROM FINISHEDGOODS
+        WHERE FINISHEDGOODS_NAME LIKE '%'||#{goods.finishedgoods_name}||'%'
+        <if test="goods.finishedgoods_status == 0">
+            AND FINISHEDGOODS_STATUS=0
+        </if>
+        <if test="goods.finishedgoods_status == 1">
+            AND FINISHEDGOODS_STATUS=1
+        </if>
+        <if test="goods.finishedgoods_status == 2">
+            AND FINISHEDGOODS_STATUS=2
+        </if>
+    </select>
+
+    <select id="getRecipeList" resultType="com.project.kammi.domain.finishedgoods.FinishedGoodsVO">
+        SELECT /*+ INDEX_ASC(FINISHEDGOODS SYS_C0012608)*/FINISHEDGOODS_NAME
+        FROM FINISHEDGOODS
+        WHERE FINISHEDGOODS_STATUS=0
+    </select>
+
+    <update id="goodsUpdate">
+        UPDATE FINISHEDGOODS
+        SET FINISHEDGOODS_STATUS = #{finishedgoods_status}, FINISHEDGOODS_PRICE = #{finishedgoods_price}, QUANTITY_UNITS =#{quantity_units}
+        WHERE FINISHEDGOODS_NAME = #{finishedgoods_name}
+    </update>
+
+    <delete id="goodsDelete">
+        DELETE FROM FINISHEDGOODS f
+        WHERE
+        NOT EXISTS (SELECT 1
+        FROM RECIPE r
+        WHERE f.RECIPE_ID =r.RECIPE_ID)
+    </delete>
+
+    <insert id="goodsAdd">
+        INSERT INTO FINISHEDGOODS(FINISHEDGOODS_ID,FINISHEDGOODS_NAME,QUANTITY_UNITS, RECIPE_ID)
+        VALUES (finishedgoods_seq.nextval,(SELECT RECIPE_NAME FROM RECIPE WHERE RECIPE.RECIPE_ID = #{recipe_id}),'1kg', #{recipe_id})
+    </insert>
+
+    <select id="recipeId" resultType="com.project.kammi.domain.finishedgoods.FinishedGoodsVO">
+        SELECT RECIPE_ID
+        FROM RECIPE r
+        WHERE
+        NOT EXISTS (SELECT 1
+        FROM FINISHEDGOODS f
+        WHERE r.RECIPE_ID=f.RECIPE_ID)
+    </select>
+
+    <select id="goodsIdSelect" resultType="com.project.kammi.domain.finishedgoods.FinishedGoodsVO">
+        SELECT FINISHEDGOODS_ID
+        FROM FINISHEDGOODS
+        GROUP BY FINISHEDGOODS_ID
+    </select>
+    <update id="goodsQuantityUpdate">
+        UPDATE FINISHEDGOODS g
+        SET FINISHEDGOODS_QUANTITY =(SELECT NVL((SUM(FINISHEDGOODSINVENTORY_QUANTITY)-NVL((SELECT SUM(FINISHEDGOODSINVENTORY_QUANTITY) AS min
+        FROM FINISHEDGOODSINVENTORY m
+        WHERE m.FINISHEDGOODSINVENTORY_DIVISION = '출고'
+        AND m.FINISHEDGOODSINVENTORY_GOODS_ID = p.FINISHEDGOODSINVENTORY_GOODS_ID
+        GROUP BY FINISHEDGOODSINVENTORY_GOODS_ID
+        ),0)),0) AS FINISHEDGOODSINVENTORY_QUANTITY
+        FROM FINISHEDGOODSINVENTORY p
+        WHERE p.FINISHEDGOODSINVENTORY_DIVISION = '입고'
+        AND p.FINISHEDGOODSINVENTORY_GOODS_ID = #{finishedgoods_id}
+        GROUP BY FINISHEDGOODSINVENTORY_GOODS_ID)
+        WHERE g.FINISHEDGOODS_ID =#{finishedgoods_id}
+    </update>
+</mapper>

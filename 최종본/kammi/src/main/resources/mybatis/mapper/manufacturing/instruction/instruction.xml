@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.kammi.mapper.manufacturing.instruction.instructionMapper">
+    <select id="selectAllInstruction" resultType="com.project.kammi.domain.manufacturing.manufacturingInstructionVO">
+        SELECT *
+        FROM (
+        SELECT
+        ROW_NUMBER() OVER (ORDER BY instruction_id) AS rn,
+        instruction_id,
+        recipe_name,
+        output,
+        instruction_date,
+        instruction_employee,
+        manufacturing_STATUS
+        FROM manufacturingInstruction
+        WHERE recipe_name LIKE '%'||#{manufacturingInstructionVO.recipe_Name}||'%'
+        <if test="manufacturingInstructionVO.manufacturing_Status == 0">
+            AND MANUFACTURING_STATUS=0
+        </if>
+        <if test="manufacturingInstructionVO.manufacturing_Status == 1">
+            AND MANUFACTURING_STATUS=1
+        </if>
+        <if test="manufacturingInstructionVO.manufacturing_Status == 2">
+            AND MANUFACTURING_STATUS=2
+        </if>
+        )
+        <![CDATA[
+        WHERE rn <= #{paging.pageNum} * #{paging.pageSize} AND rn > (#{paging.pageNum} - 1) * #{paging.pageSize}
+        ]]>
+
+    </select>
+
+    <select id="maxpageCount" resultType="integer">
+        SELECT count(*)
+        FROM manufacturingInstruction
+        WHERE recipe_name LIKE '%'||#{manufacturingInstructionVO.recipe_Name}||'%'
+        <if test="manufacturingInstructionVO.manufacturing_Status == 0">
+            AND MANUFACTURING_STATUS=0
+        </if>
+        <if test="manufacturingInstructionVO.manufacturing_Status == 1">
+            AND MANUFACTURING_STATUS=1
+        </if>
+        <if test="manufacturingInstructionVO.manufacturing_Status == 2">
+            AND MANUFACTURING_STATUS=2
+        </if>
+    </select>
+
+    <select id="selectRecipeName" resultType="com.project.kammi.domain.manufacturing.manufacturingInstructionVO">
+        select recipe_Name from recipe
+    </select>
+
+    <insert id = "insertInstruction">
+        insert into manufacturingInstruction(instruction_id, recipe_name, OUTPUT, instruction_date, instruction_employee, manufacturing_status)
+        values(MANUFACTURINGINSTRUCTION_SEQ.nextval, #{recipe_Name}, #{output}, sysdate, #{instruction_Employee}, 0)
+    </insert>
+
+    <update id = "updateInstruction">
+        UPDATE manufacturingInstruction
+        SET
+            OUTPUT = #{output},
+            MODIFY_DATE = SYSDATE
+        WHERE
+            INSTRUCTION_ID = #{instruction_Id}
+            and
+            manufacturing_status = 0
+    </update>
+
+    <select id="selectRowClickInstruction" resultType="com.project.kammi.domain.manufacturing.manufacturingInstructionVO">
+        SELECT *
+        FROM manufacturingInstruction
+        where
+            instruction_Id = #{instruction_Id}
+    </select>
+
+    <delete id = "deleteInstruction">
+        delete from
+        manufacturingInstruction
+        where
+        instruction_Id = #{instruction_Id}
+        and
+        manufacturing_status = 0
+    </delete>
+
+    <select id="selectInstructionForInsertPerform" resultType="com.project.kammi.domain.manufacturing.manufacturingInstructionVO">
+        SELECT *
+        FROM manufacturingInstruction
+        where manufacturing_Status != 2
+    </select>
+
+    <update id = "updateInstructionRemainingProduction">
+        UPDATE manufacturingInstruction
+        SET RemainingProduction = COALESCE(remainingProduction, 0) + #{remainingProduction},
+            manufacturing_Status = 1
+        WHERE instruction_Id = #{instruction_Id} and
+        <![CDATA[
+        (COALESCE(remainingProduction, 0) + #{remainingProduction}) <= output + 100
+        ]]>
+    </update>
+
+    <update id = "updateInstructionRemainingProductionInPerform">
+        UPDATE manufacturingInstruction
+        SET RemainingProduction = COALESCE(remainingProduction, 0) - #{remainingProduction},
+        manufacturing_Status = 1
+        WHERE instruction_Id = #{instruction_Id}
+    </update>
+
+    <select id="selectOutputAndRemainingProduction" resultType="com.project.kammi.domain.manufacturing.manufacturingInstructionVO">
+        SELECT output, remainingProduction
+        FROM manufacturingInstruction
+        where instruction_Id = #{instruction_Id}
+    </select>
+
+    <update id = "updateInstructionStatus">
+        UPDATE manufacturingInstruction
+        SET
+        manufacturing_Status = '2'
+        WHERE
+        instruction_Id = #{instruction_Id}
+    </update>
+
+
+</mapper>

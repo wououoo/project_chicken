@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.kammi.mapper.finishedgoods.GoodsInvenMapper">
+    <select id="readyGoods" resultType="com.project.kammi.domain.finishedgoods.FinishedGoodsVO">
+        SELECT FINISHEDGOODS_ID, FINISHEDGOODS_NAME
+        FROM FINISHEDGOODS
+        WHERE FINISHEDGOODS_STATUS=1
+    </select>
+
+    <select id="invenModalTable" resultType="com.project.kammi.domain.finishedgoods.GoodsInvenVO">
+        SELECT
+        FINISHEDGOODSINVENTORY_STORAGE,
+        (SELECT STORAGE_NAME FROM FINISHEDGOODSSTORAGE s WHERE s.STORAGE_ID =p.FINISHEDGOODSINVENTORY_STORAGE) AS storage_name,
+        FINISHEDGOODSINVENTORY_GOODS_NAME,
+        SUM(FINISHEDGOODSINVENTORY_QUANTITY)-NVL((SELECT SUM(FINISHEDGOODSINVENTORY_QUANTITY) AS min
+        FROM FINISHEDGOODSINVENTORY m
+        WHERE m.FINISHEDGOODSINVENTORY_DIVISION = '출고'
+        AND m.FINISHEDGOODSINVENTORY_GOODS_ID = p.FINISHEDGOODSINVENTORY_GOODS_ID
+        AND m.FINISHEDGOODSINVENTORY_STORAGE = p.FINISHEDGOODSINVENTORY_STORAGE
+        GROUP BY FINISHEDGOODSINVENTORY_GOODS_ID, FINISHEDGOODSINVENTORY_GOODS_NAME
+        ),0) AS FINISHEDGOODSINVENTORY_QUANTITY
+        FROM FINISHEDGOODSINVENTORY p
+        WHERE p.FINISHEDGOODSINVENTORY_DIVISION = '입고'
+        <if test="inven.finishedgoodsinventory_goods_id != 0">
+            AND p.FINISHEDGOODSINVENTORY_GOODS_ID = #{inven.finishedgoodsinventory_goods_id}
+        </if>
+        GROUP BY FINISHEDGOODSINVENTORY_STORAGE,FINISHEDGOODSINVENTORY_GOODS_ID,FINISHEDGOODSINVENTORY_GOODS_NAME
+        ORDER BY FINISHEDGOODSINVENTORY_GOODS_NAME
+        OFFSET (#{paging.pageNum}-1)*#{paging.pageSize} ROWS FETCH NEXT #{paging.pageSize} ROW ONLY
+    </select>
+
+    <select id="countInvenModal" resultType="integer">
+        SELECT COUNT(cnt)  FROM (SELECT COUNT(*) AS cnt
+        FROM FINISHEDGOODSINVENTORY p
+        WHERE p.FINISHEDGOODSINVENTORY_DIVISION = '입고'
+        <if test="inven.finishedgoodsinventory_goods_id != 0">
+            AND p.FINISHEDGOODSINVENTORY_GOODS_ID = #{inven.finishedgoodsinventory_goods_id}
+        </if>
+        GROUP BY FINISHEDGOODSINVENTORY_STORAGE,FINISHEDGOODSINVENTORY_GOODS_ID,FINISHEDGOODSINVENTORY_GOODS_NAME)
+    </select>
+
+    <select id="invenTable" resultType="com.project.kammi.domain.finishedgoods.GoodsInvenVO">
+        SELECT
+            FINISHEDGOODSINVENTORY_ID,
+            FINISHEDGOODSINVENTORY_DIVISION,
+            FINISHEDGOODSINVENTORY_GOODS_ID,
+            FINISHEDGOODSINVENTORY_GOODS_NAME,
+            FINISHEDGOODSINVENTORY_QUANTITY,
+            (SELECT STORAGE_NAME
+            FROM FINISHEDGOODSSTORAGE s
+            WHERE s.STORAGE_ID=f.FINISHEDGOODSINVENTORY_STORAGE) AS storage_name,
+            FINISHEDGOODSINVENTORY_DATE
+        FROM
+            FINISHEDGOODSINVENTORY f
+        WHERE
+            f.FINISHEDGOODSINVENTORY_DIVISION LIKE '%'||#{inven.finishedgoodsinventory_division}||'%'
+            AND f.FINISHEDGOODSINVENTORY_GOODS_NAME LIKE '%'||#{inven.finishedgoodsinventory_goods_name}||'%'
+        ORDER BY FINISHEDGOODSINVENTORY_ID
+        OFFSET (#{paging.pageNum}-1)*#{paging.pageSize} ROWS FETCH NEXT #{paging.pageSize} ROW ONLY
+    </select>
+    <select id="invenMaxCount" resultType="integer">
+        SELECT
+        COUNT(*)z
+        FROM
+        FINISHEDGOODSINVENTORY f
+        WHERE
+        f.FINISHEDGOODSINVENTORY_DIVISION LIKE '%'||#{inven.finishedgoodsinventory_division}||'%'
+        AND f.FINISHEDGOODSINVENTORY_GOODS_NAME LIKE '%'||#{inven.finishedgoodsinventory_goods_name}||'%'
+        ORDER BY FINISHEDGOODSINVENTORY_ID
+    </select>
+    <insert id="invenOutter">
+        INSERT INTO FINISHEDGOODSINVENTORY
+        VALUES (GoodsInven_seq.nextval,#{finishedgoodsinventory_goods_id}, #{finishedgoodsinventory_goods_name}, #{finishedgoodsinventory_quantity}, '출고', #{finishedgoodsinventory_date}, #{finishedgoodsinventory_storage})
+    </insert>
+    <update id="invenOutterUpdate">
+        UPDATE FINISHEDGOODSSTORAGE
+        SET STORAGE_CURRENT_AMOUNT = STORAGE_CURRENT_AMOUNT-#{finishedgoodsinventory_quantity}
+        WHERE STORAGE_ID = #{finishedgoodsinventory_storage}
+    </update>
+
+</mapper>
