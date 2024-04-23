@@ -37,6 +37,8 @@
                 <option value="@gmail.com">@gmail.com</option>
                 <option value="@naver.com">@naver.com</option>
                 <option value="@daum.net">@daum.net</option>
+                <option value="@nate.com">@nate.com</option>
+                <option value="@kakao.com">@kakao.com</option>
             </select>
             <br>
             <div class="authoritybox">
