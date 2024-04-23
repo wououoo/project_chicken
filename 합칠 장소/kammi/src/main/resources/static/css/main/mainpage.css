@@ -1,0 +1,143 @@
+@font-face {
+    font-family: 'YEONGJUSeonbiTTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/YEONGJUSeonbiTTF.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*메인 메뉴 타이틀*/
+#main-title{
+    display:flex;
+    justify-content: center;
+    position: relative;
+    padding-top:40px;
+    padding-left:50px;
+    width: 100%;
+    height: 300px;
+}
+
+.title-img{
+    width:40%;
+    height:100%;
+    vertical-align:middle;
+}
+.title-text{
+    position:absolute;
+    color:#7C7C7C;
+    top:5%;
+    font-size:30px;
+    font-family:'YEONGJUSeonbiTTF';
+    opacity: 0;
+    transition: all 2s;
+}
+
+/*백그라운드 동영상 처리*/
+#bg-video{
+    width:100%;
+    height:300px;
+}
+
+#bg-video-content{
+    width:100%;
+    height:300px;
+    object-fit:cover;
+}
+
+/*메뉴 소개 리스트*/
+#product-list{
+    width:100%;
+    height:400px;
+    margin-bottom:100px;
+    opacity: 0;
+    transition: all 2s;
+}
+
+.product-menu{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:20px;
+}
+
+.product-sub{
+    display:flex;
+    align-items: center;
+}
+
+.product-title{
+    font-size:30px;
+    font-family:'PuradakGentleGothicR';
+}
+
+.product-subtitle{
+    color:#7C7C7C;
+    font-size:20px;
+    font-family:'YEONGJUSeonbiTTF';
+    margin-left:20px;
+}
+/*화살표 설정*/
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+.material-symbols-outlined.arrow{
+    font-size: 50px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+/*제품 메뉴들 보이는 곳*/
+.product-content{
+    display:flex;
+    justify-content:space-around;
+    align-items: center;
+    margin-bottom:30px;
+    width:100%;
+    height:100%;
+}
+
+/*이미지 크기 설정*/
+.product-img{
+    width:100%;
+    height:50%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.product-box{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left:20px;
+    width:100%;
+    height:100%;
+}
+
+.test-img{
+    width:100%;
+    height:100%;
+    transition:all 0.2s linear;
+}
+.test-img:hover{
+    transform:scale(1.1);
+}
+
+
+
+.product-name{
+    display:flex;
+    justify-content:center;
+    margin-top:10px;
+    font-family:'PuradakGentleGothicR';
+    color:#7C7C7C;
+}
+.swiper-pagination{
+    font-family: 'PuradakGentleGothicR';
+    color: #7C7C7C;
+}
+
+/*이미지 호버 시 확대 기능 예정*/
