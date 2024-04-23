@@ -110,7 +110,7 @@ function showInvenList(pageNum) {
                 str += "<td data-th='제품 번호'>"+list[i].finishedgoodsinventory_goods_id+"</td>";
                 str += "<td data-th='제품 이름'>"+list[i].finishedgoodsinventory_goods_name+"</td>";
                 str += "<td data-th='수량'>"+list[i].finishedgoodsinventory_quantity+"</td>";
-                str += "<td data-th='적재 창고'>"+list[i].finishedgoodsinventory_storage+"</td>";
+                str += "<td data-th='적재 창고'>"+list[i].storage_name+"</td>";
                 str += "<td data-th='재고 날짜'>"+invenDateForm(list[i].finishedgoodsinventory_date)+"</td>";
                 str += "</tr>";
             }
