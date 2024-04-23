@@ -106,7 +106,8 @@
 <script>
 // Ajax 값 넣는 부분
 var goodsService = (function() {
-    //제품 상태 추가
+
+    //제품 미판매에서 판매중으로 상태 변경
     function update(goodsplus,callback,error){
         $.ajax({
             type:'put',

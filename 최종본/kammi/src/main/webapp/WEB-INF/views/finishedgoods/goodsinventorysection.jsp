@@ -129,21 +129,32 @@ function createInvenPage(division,goods,pageNum){
         function(list) {
             var str2="";
             var prevInt;
-            if(pageNum==1){
+
+
+            //list는 페이지 최대 개수
+
+            if(pageNum==1){             //현재 페이지가 1이면 이전 페이지 수를 1로 초기화
                 prevInt=1;
             } else{
-                prevInt=(pageNum-1);
+                prevInt=(pageNum-1);    //현재 페이지가 1이 아니면 -1을 한다.
             }
-            var currentPageSize = 5;
-            var currentPageList = Math.ceil(pageNum/currentPageSize);
-            var currentMaxPage = currentPageList*currentPageSize;
+
+            var nextInt;
+            if(pageNum==list){          //현재 페이지가 마지막 페이지와 같다면 다음 페이지 수를
+                nextInt=list;           //마지막 페이지 수로 초기화
+            } else{
+                nextInt=(pageNum+1);    //아닐 경우 현재 페이지 수에 +1
+            }
+
+            var currentPageSize = 5; //한번에 보여질 페이지 개수
+            var currentPageList = Math.ceil(pageNum/currentPageSize);   //현재 페이지가 속해있는 그룹 확인
+            var currentMaxPage = currentPageList*currentPageSize;       //현재 그룹에서 최대 페이지 수
 
             var currentMaxPageReal;
-
-            if(currentMaxPage>=list){
+            if(currentMaxPage>=list){       //총 페이지 개수가 현재 최대 페이지 개수보다 작으면 초기화
                 currentMaxPageReal=list;
             }
-            var currentMinPage = currentMaxPage-(currentPageSize-1);
+            var currentMinPage = currentMaxPage-(currentPageSize-1);    //현재 그룹에서 최소 페이지
 
             str2+="<li class='pagelist'><button class='pagebtn prev' onclick='showInvenList("+prevInt+")'>&#10094;</button></li>";
             for(var i=currentMinPage; i <= currentMaxPageReal; i++) {
@@ -153,13 +164,8 @@ function createInvenPage(division,goods,pageNum){
                     str2+="<li class='pagelist'><button class='pagebtn pagenum' onclick='showInvenList("+i+")'>"+i+"</button></li>";
                 }
             }
-            var nextInt;
-            if(pageNum==list){
-                nextInt=list;
-            } else{
-                nextInt=(pageNum+1);
-            }
             str2+="<li class='pagelist'><button class='pagebtn next' title='next page' onclick='showInvenList("+nextInt+")'>&#10095;</button></li>";
+
             pageUL.html(str2);
         }
     );

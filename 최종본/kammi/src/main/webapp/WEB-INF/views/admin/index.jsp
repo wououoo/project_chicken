@@ -15,13 +15,17 @@
             <div id="selec" class="title-text">감칠맛을 더하는 미식의 세계</div>
             <img class="title-img" src="/resources/img/mainlogo/mainLogo2.png"></img>
         </div>
+
+
+        <!--메인 화면 영상 처리-->
         <div id="bg-video">
-            <video id="bg-video-content" autoplay muted loop>
+            <video id="bg-video-content" autoplay muted loop><!--자동 재생, 음속어, 무한 반복-->
                 <source src="/resources/img/mainimg/mainBackGround.mp4" type="video/mp4">
             </video>
         </div>
 
-        <div id="product-list">
+
+        <div id="product-list" style="margin-bottom:100px;">
             <div class="product-menu">
                 <div class="product-sub">
                     <div class="product-title">MENU</div>
@@ -82,6 +86,12 @@ function showMainImgList() {
                 str += "<div class='product-name'>"+list[i].recipe_Name+"</div>";
                 str += "</div>";
             }
+            for(var i = 0, len = list.length || 0; i < len; i++) {
+                str += "<div class='swiper-slide product-box'>";
+                str += "<div class='product-img'><img class='test-img' src='/resources/upload/chickenPhoto/"+list[i].fileName+"'></div>";
+                str += "<div class='product-name'>"+list[i].recipe_Name+"</div>";
+                str += "</div>";
+            }
             mainimgUL.html(str);
         }
     );
@@ -104,18 +114,19 @@ observer.observe(tx);
 let tx2 = document.getElementById('product-list');
 observer.observe(tx2);
 
+//스위퍼 라이브러리 사용
 var swiper = new Swiper(".mySwiper", {
-  slidesPerView: 3,
-  spaceBetween: 20,
+  slidesPerView: 3, //한번에 보여줄 슬라이드량
+  spaceBetween: 20, //슬라이드 간의 여백
   navigation: {
-      nextEl: ".next-arrow",
-      prevEl: ".prev-arrow",
+      nextEl: ".next-arrow", //다음 버튼
+      prevEl: ".prev-arrow", //이전 버튼
   },
   autoplay: {
-      delay: 2500,
-      disableOnInteraction: false
+      delay: 2500,  //2.5초 마다 전환
+      disableOnInteraction: false //한번 끝까지 가도 자동재생
   },
-  pagination: {
+  pagination: { //페이징 처리
       el: ".swiper-pagination",
       type: "fraction",
   },

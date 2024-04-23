@@ -67,9 +67,12 @@
                                         <div class="sel sel--black-panther">
                                             <select name="select-profession" id="goods-insert">
                                                 <option value="1" disabled selected>제품 이름</option>
+
+                                                <!--JSTL 사용하여 미판매중인 제품명 삽입-->
                                                 <c:forEach items="${recipelist}" var="recipe">
                                                     <option><c:out value="${recipe.finishedgoods_name}" /></option>
                                                 </c:forEach>
+
                                             </select>
                                         </div>
                                     </div>
@@ -118,7 +121,7 @@ const goodsInsert = document.getElementById('goods-insert-btn');
 goodsInsert.addEventListener('click', function(){
     var goodsPrice = document.getElementById('goods-price');
     const goodsInsert = document.getElementById('goods-insert');
-    var option = goodsInsert.options[goodsInsert.selectedIndex]; //
+    var option = goodsInsert.options[goodsInsert.selectedIndex];
     if(modalindex==null){
         modalindex=0;
     }
@@ -420,6 +423,7 @@ function goodsStatusChange(name, price,units, status){
 
 <!--카카오 지도 API 스크립트-->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=07f6a37e12a726e6176ae587829db214&libraries=services"></script>
+
 <script>
 // 마커를 담을 배열입니다
 var markers = [];

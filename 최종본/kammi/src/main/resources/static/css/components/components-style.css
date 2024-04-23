@@ -97,6 +97,7 @@
     margin-bottom: .5em;
 }
 
+/*가상 요소 */
 .rwd-table td:before {
     content: attr(data-th) ": ";
     font-weight: bold;
@@ -126,36 +127,33 @@
     padding: .5em 1em;
 }
 
-@media screen and (max-width: 601px) {
+@media screen and (max-width: 601px) { /*미디어 쿼리 화면이 601px 보다 작은 경우*/
     .rwd-table tr:nth-child(2) {
         border-top: none;
     }
 }
-@media screen and (min-width: 600px) {
-    .rwd-table tr:hover:not(:first-child) {
+
+@media screen and (min-width: 600px) { /*미디어 쿼리 화면이 600px보다 큰 경우*/
+    .rwd-table tr:hover:not(:first-child) { /*첫번째 요소를 제외하고 배경색 변경*/
         background-color: rgba(0,0,0,0.18);
         /*#d8e7f3*/
     }
-    .rwd-table td:before {
+    .rwd-table td:before { /*td의 가상요소를 없앤다.*/
         display: none;
     }
-
     .rwd-table th,
-    .rwd-table td {
+    .rwd-table td {         /*display:table, table-cell를 사용하여 자동으로 간격을 맡춘다.*/
         display: table-cell;
         padding: .25em .5em;
     }
-
     .rwd-table th:first-child,
     .rwd-table td:first-child {
         padding-left: 0;
     }
-
     .rwd-table th:last-child,
     .rwd-table td:last-child {
         padding-right: 0;
     }
-
     .rwd-table th,
     .rwd-table td {
         padding: 1em !important;
