@@ -34,27 +34,8 @@
             </div>
 
             <div class="swiper mySwiper">
-                <div class="swiper-wrapper product-content">
-                    <div class="swiper-slide product-box">
-                        <div class="product-img"><img class="test-img" src="/resources/img/mainimg/chicken1.jpg"></div>
-                        <div class="product-name">텍스트</div>
-                    </div>
-                    <div class="swiper-slide product-box">
-                        <div class="product-img"><img class="test-img" src="/resources/img/mainimg/chicken1.jpg"></div>
-                        <div class="product-name">텍스트</div>
-                    </div>
-                    <div class="swiper-slide product-box">
-                        <div class="product-img"><img class="test-img" src="/resources/img/mainimg/chicken1.jpg"></div>
-                        <div class="product-name">텍스트</div>
-                    </div>
-                    <div class="swiper-slide product-box">
-                        <div class="product-img"><img class="test-img" src="/resources/img/mainimg/chicken1.jpg"></div>
-                        <div class="product-name">텍스트</div>
-                    </div>
-                    <div class="swiper-slide product-box">
-                        <div class="product-img"><img class="test-img" src="/resources/img/mainimg/chicken1.jpg"></div>
-                        <div class="product-name">텍스트</div>
-                    </div>
+                <div class="swiper-wrapper product-content main-img">
+
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -63,39 +44,84 @@
     </div>
 
 <script>
-    document.title="감미 치킨";
-    let observer = new IntersectionObserver((e)=>{
-        e.forEach((box1)=>{
-            if(box1.isIntersecting){
-                box1.target.style.opacity=1;
-            } else{
-                box1.target.style.opacity=0;
+document.title="감미 치킨";
+var mainService = (function() {
+
+    function getImg(rno, callback,error){
+        $.get("/goodsrest/goods/img",function(result){
+            if(callback){
+                callback(result);
             }
-
+        }).fail(function(xhr,status,err){
+            if(error){
+                error();
+            }
         });
-    });
-    let tx = document.getElementById('selec');
-    observer.observe(tx);
+    }
 
-    let tx2 = document.getElementById('product-list');
-    observer.observe(tx2);
+    return {
+        getImg: getImg
+    };
+})();
 
-    var swiper = new Swiper(".mySwiper", {
-      slidesPerView: 3,
-      spaceBetween: 20,
-      navigation: {
-          nextEl: ".next-arrow",
-          prevEl: ".prev-arrow",
-      },
-      autoplay: {
-          delay: 2500,
-          disableOnInteraction: false
-      },
-      pagination: {
-          el: ".swiper-pagination",
-          type: "fraction",
-      },
+var mainimgUL = $(".main-img");
+function showMainImgList() {
+    mainService.getImg(
+        {},
+        function(list) {                      // ajax 함수 콜 성공시 처리
+
+            if(list == null || list.length == 0){
+                mainimgUL.html("");
+                return;
+            }
+            var str = "";
+
+            for(var i = 0, len = list.length || 0; i < len; i++) {
+                str += "<div class='swiper-slide product-box'>";
+                str += "<div class='product-img'><img class='test-img' src='/resources/upload/chickenPhoto/"+list[i].fileName+"'></div>";
+                str += "<div class='product-name'>"+list[i].recipe_Name+"</div>";
+                str += "</div>";
+            }
+            mainimgUL.html(str);
+        }
+    );
+}
+showMainImgList();
+
+let observer = new IntersectionObserver((e)=>{
+    e.forEach((box1)=>{
+        if(box1.isIntersecting){
+            box1.target.style.opacity=1;
+        } else{
+            box1.target.style.opacity=0;
+        }
+
     });
+});
+let tx = document.getElementById('selec');
+observer.observe(tx);
+
+let tx2 = document.getElementById('product-list');
+observer.observe(tx2);
+
+var swiper = new Swiper(".mySwiper", {
+  slidesPerView: 3,
+  spaceBetween: 20,
+  navigation: {
+      nextEl: ".next-arrow",
+      prevEl: ".prev-arrow",
+  },
+  autoplay: {
+      delay: 2500,
+      disableOnInteraction: false
+  },
+  pagination: {
+      el: ".swiper-pagination",
+      type: "fraction",
+  },
+});
+
+
 
 </script>
 

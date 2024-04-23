@@ -2,6 +2,7 @@ package com.project.kammi.service.finishedgoods;
 
 import com.project.kammi.domain.finishedgoods.FinishedGoodsVO;
 import com.project.kammi.domain.paging.PagingVO;
+import com.project.kammi.domain.manufacturing.fileVO;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface FinishedGoodsService {
     public List<FinishedGoodsVO> goodsId();
 
     public void goodsQuantity(FinishedGoodsVO finishedGoodsVO);
+
+    public List<fileVO> mainFileImage();
 }

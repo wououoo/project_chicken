@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.project.kammi.domain.manufacturing.fileVO;
 
 import java.util.List;
 
@@ -16,6 +17,12 @@ import java.util.List;
 @AllArgsConstructor
 public class FinishedGoodsRest {
     private FinishedGoodsService service;
+
+    @GetMapping(value = "/goods/img",produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<fileVO>>getGoodsImg(){
+
+        return new ResponseEntity<>(service.mainFileImage(),HttpStatus.OK);
+    }
 
     @RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
             value = "/name/{name}/price/{price}/units/{units}/status/{status}",consumes = "application/json",

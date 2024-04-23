@@ -1,6 +1,7 @@
 package com.project.kammi.service.finishedgoods;
 
 import com.project.kammi.domain.finishedgoods.FinishedGoodsVO;
+import com.project.kammi.domain.manufacturing.fileVO;
 import com.project.kammi.domain.paging.PagingVO;
 import com.project.kammi.mapper.finishedgoods.FinishedGoodsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,12 @@ public class FinishedGoodsServiceImpl implements FinishedGoodsService{
 
     @Autowired
     private FinishedGoodsMapper finishedGoodsMapper;
+
+    @Override
+    public List<fileVO> mainFileImage() {
+        return finishedGoodsMapper.mainImage();
+    }
+
     @Override
     public List<FinishedGoodsVO> selectGoods(PagingVO paging, FinishedGoodsVO finishedGoodsVO){
         List<FinishedGoodsVO> goods = finishedGoodsMapper.getGoodsList(paging,finishedGoodsVO);

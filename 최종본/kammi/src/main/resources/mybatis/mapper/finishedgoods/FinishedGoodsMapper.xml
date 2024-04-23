@@ -104,4 +104,11 @@
         GROUP BY FINISHEDGOODSINVENTORY_GOODS_ID)
         WHERE g.FINISHEDGOODS_ID =#{finishedgoods_id}
     </update>
+
+    <select id="mainImage" resultType="com.project.kammi.domain.manufacturing.fileVO">
+        SELECT FILENAME,(SELECT RECIPE_NAME
+        FROM RECIPE c WHERE c.RECIPE_ID =r.RECIPE_ID) AS recipe_Name
+        FROM FILEREPOSITORY f, RECIPE r
+        WHERE f.RECIPE_ID = r.RECIPE_ID
+    </select>
 </mapper>
