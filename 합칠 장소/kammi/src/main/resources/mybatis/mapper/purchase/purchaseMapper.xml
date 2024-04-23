@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.kammi.mapper.purchase.purchaseMapper">
+    <select id="materialssupplierRead" resultType="com.project.kammi.domain.purchase.materialssupplierVO">
+        select *
+        from materialssupplier
+    </select>
+
+    <select id="materialsRead" resultType="com.project.kammi.domain.purchase.materialsVO">
+        select *
+        from materials
+        <if test="part != null">
+            where material_category = #{part}
+        </if>
+    </select>
+    <select id="materialRead" resultType="com.project.kammi.domain.purchase.materialsVO">
+        select *
+        from materials
+        where material_id = #{part}
+    </select>
+    <select id="materialListRead" resultType="com.project.kammi.domain.purchase.materialsVO">
+        SELECT *
+        FROM materials
+        ORDER BY material_id
+        OFFSET #{offset} ROWS
+        FETCH NEXT #{limit} ROWS ONLY
+    </select>
+    <insert id="materialInsert">
+        insert into materials(material_name,material_units,material_division,material_category,amount)
+        values (#{material_name},#{material_units},#{material_division},#{material_category},#{amount})
+    </insert>
+    
+    <select id="supplierRead" resultType="com.project.kammi.domain.purchase.materialssupplierVO">
+		select *
+		from materialssupplier
+		where supplier_sell_material = #{part}
+	</select>
+
+
+    <insert id="purchaseListInsert">
+        insert into purchaselist(purchaselist_subject,purchaselist_content)
+        values (#{purchaseList_subject},#{purchaseList_content})
+    </insert>
+
+    <insert id="materialPurchaseInsert" parameterType="java.util.List">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            SELECT MAX(purchaselist_id)
+            FROM purchaselist
+        </selectKey>
+        INSERT ALL
+        <foreach collection="list" item="item">
+            INTO materialpurchase(purchaselist_id, material_id, supplier_id, purchase_amount)
+            VALUES
+            (
+            #{id}, #{item.material_id}, #{item.supplier_id}, #{item.purchase_amount}
+            )
+        </foreach>
+        SELECT * FROM DUAL
+    </insert>
+
+    <select id="purchaseListRead" resultType="com.project.kammi.domain.purchase.purchaseListVO">
+        select *
+        from purchaselist
+    </select>
+
+    <select id="materialPurchaseRead" resultType="com.project.kammi.domain.purchase.materialPurchaseVO">
+        select *
+        from materialpurchase
+        where purchaselist_id = #{purchaseid}
+    </select>
+    
+    <delete id="materialDelete">
+		delete
+		from materials
+		where material_id = #{materialid}
+	</delete>
+	
+	<select id="categoryRead" resultType="com.project.kammi.domain.purchase.categoryVO">
+		select *
+		from materialcategory
+		where materialcategory_division = #{category}
+	</select>
+
+    <select id="pageCount">
+        select CEIL(count(*)/#{pageSize})
+        from materials
+    </select>
+    <select id="purchasePageCount">
+        select CEIL(count(*)/#{pageSize})
+        from purchaselist
+    </select>
+
+</mapper>
