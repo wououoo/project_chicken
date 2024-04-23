@@ -54,8 +54,10 @@ public class SqcurityConfig {
         http.csrf().disable()
                 .authorizeRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
-                                .requestMatchers(new AntPathRequestMatcher("/admin/**"))
-                                .hasRole("SALES")
+                                .requestMatchers(new AntPathRequestMatcher("/main/**"))
+                                .authenticated()
+                                .requestMatchers(new AntPathRequestMatcher("/finishedgoods/**"))
+                                .hasAnyRole("SALES", "MASTER")
                                 .anyRequest().permitAll()
                 )
                 .formLogin(formLogin ->
