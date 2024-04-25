@@ -388,6 +388,7 @@ var goodsService = (function() {
 })();
 </script>
 
+<!--FullPage.js 사용-->
 <div class="fullpage">
     <!-- 1번째 섹션 -->
     <div class="section">
