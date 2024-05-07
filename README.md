@@ -1,5 +1,5 @@
 # spring Boot를 이용한, 치킨 mes 프로젝트
-![image](https://github.com/wououoo/project_chicken/blob/main/%EC%B5%9C%EC%A2%85%EB%B3%B8/kammi/src/main/resources/static/img/mainlogo/mainLogo2.png)
+<p align="center">![image](https://github.com/wououoo/project_chicken/blob/main/%EC%B5%9C%EC%A2%85%EB%B3%B8/kammi/src/main/resources/static/img/mainlogo/mainLogo2.png)
 
 <br>
 
@@ -13,33 +13,32 @@
 
 ## 🖥️ 프로젝트 개요
 ### ⏲️ 프로젝트 개발 기간
-  - 2024.01.29 ~ 2024.02.14
+  - 2024.03.28 ~ 2024.04.25
     ![일정](https://github.com/wououoo/project_chicken/assets/156730657/abd2d497-9fe0-4518-bcdf-439ffaee9eac)
 
 
 ### 🔖프로젝트 주제
-  - 대상: 밀키트 제조업을 경영하는 가상의 기업 선정
+  - 대상: 치킨 프렌차이즈를 운영하는 본사
   - 용도: 구매 → 생산 → 판매 프로세스를 효율적, 체계적으로 관리할 수 있는 시스템
-  - 개발: JSP로 만든 코드를 SpringBoot(Maven Project)로 수정하여 웹 솔루션 개발
+  - 개발: SpringBoot(Maven Project), mvc패턴을 이용하여 개발
+  - 
 ### 📁프로젝트 구현 내용
   - 제조 회사의 구성원 별 권한 제한 및 프로세스 별 데이터의 CRUD 기능 구현
+  - 
 ### ⚙ 개발환경 및 도구
   - `JAVA 17`
   - `JDK 17.0.2`
   - **IDE**: IntelliJ
-  - **Framework**: Springboot(3.1.10)
+  - **Framework**: Springboot(3.0.9)
   - **DataBase**: Oracle DB(ojdbc8)
   - **ORM**: Mybatis
   - **DevOps**: Maven, Git, GitHub
   - **Tools**: Discord, GoogleDrive, StarUML
-### 🧑‍🤝‍🧑 멤버 구성
+  - 
+### 🧑‍🤝‍🧑 담당업무
 |팀원명|프로필|담당업무|
 |---|---|---|
-|[김영범<br>(팀장)](https://github.com/blanchit)|<p align="center"><img src="https://github.com/heyJSH/Project-Meal_Kit_SpringBoot/assets/150403977/1c2ddcb9-00a5-4f01-adbf-70476726e1c1" width="100"></p>|판매관리 - 프로젝트 구성 및 개발 범위 기획<br>판매 주문서 CRUD|
-|[조다혜<br>(팀원)](https://github.com/ChoDaHye)|<p align="center"><img src="https://avatars.githubusercontent.com/u/151722511?v=4" width="100"></p>|메인메뉴, 공지사항 CRUD<br>인사관리 - 로그인 화면, 마이페이지(비밀번호 변경)|
 |[우경주<br>(팀원)](https://github.com/wououoo)|<p align="center"><img src="https://github.com/heyJSH/Project-Meal_Kit_SpringBoot/assets/150403977/2bdb07d5-ae47-44f5-89dd-6335d7030ca3" width="100"></p>|구매 시스템 설계<br>구매관리 - 공급업체 및 원자재 데이터 베이스 작성|
-|[정수하<br>(팀원)](https://github.com/heyJSH)|<p align="center"><img src="https://avatars.githubusercontent.com/u/150403977?v=4" width="100"></p>|공유 드라이브/깃허브 관리<br>테이블 설계 및 ERD 작성<br>제조관리 - BOM CRUD|
-|[진재원<br>(팀원)](https://github.com/jinjw98?tab=overview&from=2024-04-01&to=2024-04-30)|<p align="center"><img src="https://github.com/heyJSH/Project-Meal_Kit_SpringBoot/assets/150403977/11e3b565-bdbc-413d-97a4-89b32a34a785" width="100"></p>|제조 시스템 설계<br>제조관리 - 제조 지시서 CRUD, 제조 수행 CRUD<br>사원관리|
 
 <br><br>
 
