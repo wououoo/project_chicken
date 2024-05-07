@@ -160,5 +160,10 @@ DB와 ERD <br>
 
 
 ## 📽️ 작동 영상
-[[📹 작동 영상]](https://drive.google.com/file/d/12LwcEgv2JtFC25zAbUwQ4FCezuiNiI1k/view?usp=sharing)
+
+
+
+
+
+[[📹 작동 영상]]https://github.com/wououoo/project_chicken/assets/156730657/08be1949-894e-44e0-a712-a4968cddd53e
 <br><br>
