@@ -1,5 +1,5 @@
 # spring Boot를 이용한, 치킨 mes 프로젝트
-<p align="center">![image](https://github.com/wououoo/project_chicken/blob/main/%EC%B5%9C%EC%A2%85%EB%B3%B8/kammi/src/main/resources/static/img/mainlogo/mainLogo2.png)
+![image](https://github.com/wououoo/project_chicken/blob/main/%EC%B5%9C%EC%A2%85%EB%B3%B8/kammi/src/main/resources/static/img/mainlogo/mainLogo2.png)
 
 <br>
 
@@ -38,7 +38,7 @@
 ### 🧑‍🤝‍🧑 담당업무
 |팀원명|프로필|담당업무|
 |---|---|---|
-|[우경주<br>(팀원)](https://github.com/wououoo)|<p align="center"><img src="https://github.com/heyJSH/Project-Meal_Kit_SpringBoot/assets/150403977/2bdb07d5-ae47-44f5-89dd-6335d7030ca3" width="100"></p>|구매 시스템 설계<br>구매관리 - 공급업체 및 원자재 데이터 베이스 작성|
+|[우경주<br>(팀원)](https://github.com/wououoo)|<p align="center"><img src="https://github.com/heyJSH/Project-Meal_Kit_SpringBoot/assets/150403977/2bdb07d5-ae47-44f5-89dd-6335d7030ca3" width="100"></p>|제조 시스템 설계<br>레시피, BOM, 제작지시, 제조수행|
 
 <br><br>
 
