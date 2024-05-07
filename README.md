@@ -1,5 +1,5 @@
 # spring Boot를 이용한, 치킨 mes 프로젝트
-[![image](https://github.com/wououoo/project_chicken/blob/main/%EC%B5%9C%EC%A2%85%EB%B3%B8/kammi/src/main/resources/static/img/mainlogo/mainLogo2.png)}
+![image](https://github.com/wououoo/project_chicken/blob/main/%EC%B5%9C%EC%A2%85%EB%B3%B8/kammi/src/main/resources/static/img/mainlogo/mainLogo2.png)
 
 <br>
 
