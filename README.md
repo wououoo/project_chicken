@@ -155,8 +155,9 @@
 
 ## 🏗️ ERD
 DB와 ERD <br>
-![image](https://github.com/heyJSH/Project-Meal_Kit_SpringBoot/assets/150403977/bcbfa9be-686b-4970-81d5-977aa1d2e7b5)
+![image](https://github.com/wououoo/project_chicken/assets/156730657/4b4fc4af-4cc2-4dad-a3ba-48dce380052c)
 <br><br>
+
 
 ## 📽️ 작동 영상
 [[📹 작동 영상]](https://drive.google.com/file/d/12LwcEgv2JtFC25zAbUwQ4FCezuiNiI1k/view?usp=sharing)
