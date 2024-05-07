@@ -14,7 +14,8 @@
 ## 🖥️ 프로젝트 개요
 ### ⏲️ 프로젝트 개발 기간
   - 2024.01.29 ~ 2024.02.14
-    ![image](https://github.com/heyJSH/Project-Meal_Kit_SpringBoot/assets/150403977/6004bb2e-135e-492c-ba36-67674976b6a0)
+    ![일정](https://github.com/wououoo/project_chicken/assets/156730657/abd2d497-9fe0-4518-bcdf-439ffaee9eac)
+
 
 ### 🔖프로젝트 주제
   - 대상: 밀키트 제조업을 경영하는 가상의 기업 선정
