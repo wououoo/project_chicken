@@ -141,17 +141,7 @@
      <h3>페이징처리</h3>
     <ul>
        <li>제조지시 및 제조수행 페이지는 페이징처리가 되어있고, 5개씩 보이며 선택조건으로 각각 제조상태, 제조라인을 기준으로 검색할 수 있다</li>
-       ![페이징처리](https://github.com/wououoo/project_chicken/assets/156730657/f7346ecb-e4e7-4948-b050-a60cb3ce3668)
-            <ol>
-              <li>제조라인, 생산량, 수행자만 수정가능</li>       
-              <br>
-              <li>만약 라인 및 수행자가 다른 공정을 수행중이라면 수정할 수 없음</li>
-              <br>
-              <li>작업수행 버튼 클릭 시 차례대로 시작시간, 염지, 조리, 양념, 포장, 종료시간 순서대로 시간이 출력</li>
-              <br>
-              <li>작업수행이 시작되었을 경우 수정 불가 </li>               
-           </ol>
-
+        <img src="https://github.com/wououoo/project_chicken/assets/156730657/f7346ecb-e4e7-4948-b050-a60cb3ce3668" alt="페이징">
     </ul>
   </div>
 </details>
